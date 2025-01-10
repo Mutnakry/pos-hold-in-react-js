@@ -245,7 +245,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       value={{
         cart,
         heldOrders,
-        clearCart,  // Ensure clearCart is correctly passed here
+        clearCart, 
         addToCart,
         removeFromCart,
         holdOrder,
