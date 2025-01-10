@@ -2,7 +2,7 @@ import React from 'react';
 import { useCart } from './CartContext';
 
 const Cart = () => {
-    const { cart, removeFromCart, holdOrder, heldOrders, restoreHeldOrder, saveAndHoldOrder, clearHeldOrders } = useCart();
+    const { cart,clearCart, removeFromCart, holdOrder, heldOrders, restoreHeldOrder, saveAndHoldOrder, clearHeldOrders } = useCart();
 
     return (
         <div className='max-w-screen-lg mx-auto grid grid-cols-2 gap-4'>
@@ -13,18 +13,26 @@ const Cart = () => {
                 ) : (
                     <ul>
                         {cart.map((item) => (
-                            <li key={item.id}>
-                                <p>{item.name} - ${item.price} - Quantity: {item.quantity}</p>
-                                <button onClick={() => removeFromCart(item.id)} className='text-white bg-red-500 rounded-lg p-2'>Remove</button>
-                            </li>
+                            <div>
+                                {item.price === 0 ? (
+                                    <div>
+                                        <p>Table :{item.name} </p>
+                                    </div>
+                                ) : (
+                                    <li key={item.id}>
+                                        <p>{item.name} - ${item.price} - Quantity: {item.quantity}</p>
+                                        <button onClick={() => removeFromCart(item.id)} className='text-white bg-red-500 rounded-lg p-2'>Remove</button>
+                                    </li>
+                                )}
+                            </div>
                         ))}
                     </ul>
                 )}
-                {/* Calculate the total sum */}
                 <div>
                     <p>Total: ${cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}</p>
                 </div>
                 <div className="space-x-4">
+                <button className="bg-green-300 p-2" onClick={clearCart}>Clear</button>
                     <button className="bg-green-300 p-2" onClick={saveAndHoldOrder}>Save</button>
                     <button className="bg-green-300 p-2" onClick={holdOrder}>Hold Order</button>
                 </div>
@@ -42,9 +50,19 @@ const Cart = () => {
                                 <p>Order {index + 1}:</p>
                                 <ul >
                                     {order.map((item) => (
-                                        <li key={item.id}>
-                                            {item.name} - ${item.price} - Quantity: {item.quantity}
-                                        </li>
+                                        <div>
+                                            {item.price === 0 ? (
+                                                <div>
+                                                    <p>Table :{item.name} </p>
+                                                </div>
+                                            ) : (
+                                                <li key={item.id}>
+                                                    {item.name} - ${item.price} - Quantity: {item.quantity}
+                                                </li>
+                                            )}
+
+                                        </div>
+
                                     ))}
                                 </ul>
                                 <button onClick={() => restoreHeldOrder(order)} className='bg-blue-500 py-1 px-4 rounded-lg'>Restore to Cart</button>

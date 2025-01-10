@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useCart } from './CartContext'; // Import the custom hook to use cart context
+import { Link } from 'react-router-dom';
 
 interface ProductType {
   id: number;
@@ -16,16 +17,27 @@ const tablecheai: ProductType[] = [
 ];
 
 const Product: React.FC = () => {
-  const { addToCart } = useCart();
+  const { addToCart ,clearCart} = useCart();
 
   // Function to add product to cart
   const addProductToCart = (product: ProductType) => {
-    addToCart(product); // Pass the product directly to addToCart
+    addToCart(product);
   };
 
   return (
     <div className='max-w-screen-lg mx-auto'>
       <h2 className='text-4xl mb-6'>Product List</h2>
+
+      <Link
+      to={'/'}
+      className='bg-slate-500 p-4 rounded-lg shadow-md'
+      onClick={() => {
+        clearCart(); // Call clearCart when the link is clicked
+      }}
+    >
+      Back
+    </Link>
+     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {tablecheai.map((item) => (
           <div key={item.id} className="product-card p-6 bg-white shadow-md rounded-lg text-center">

@@ -165,6 +165,8 @@ interface CartContextType {
   restoreHeldOrder: (order: CartItem[]) => void;
   saveAndHoldOrder: () => void;
   clearHeldOrders: () => void;
+  clearCart: () => void;
+  
 }
 
 // Create a Context for the Cart
@@ -231,11 +233,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     alert('Held orders cleared');
   };
 
+  const clearCart = () => {
+    setCart([]); // Clear the cart by setting the state to an empty array
+    localStorage.removeItem('cart'); // Optionally remove the cart from localStorage as well
+    alert('Cart cleared');
+  };
+
+
   return (
     <CartContext.Provider
       value={{
         cart,
         heldOrders,
+        clearCart,  // Ensure clearCart is correctly passed here
         addToCart,
         removeFromCart,
         holdOrder,
