@@ -64,10 +64,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCart((prevCart) => {
       // Create a unique identifier that includes the product id and subudit id
       const uniqueId = `${product.id}-${product.subudit?.subuditidid || 'no-subudit'}`;
-      
+
       // Check if the product with the specific subudit already exists in the cart
       const productExists = prevCart.find((item) => item.id === uniqueId);
-  
+
       if (productExists) {
         // If it exists, update the quantity
         return prevCart.map((item) =>
@@ -79,7 +79,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
     });
   };
-  
+
 
   // Function to remove product from cart
   const removeFromCart = (itemId: string) => {
@@ -110,9 +110,27 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     alert('Held orders cleared');
   };
 
+  const increaseQuantity = (itemId: string) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  const decreaseQuantity = (itemId: string) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === itemId && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+      )
+    );
+  };
+
   return (
     <CartContext.Provider
       value={{
+        increaseQuantity,
+        decreaseQuantity,
         cart,
         heldOrders,
         addToCart,
