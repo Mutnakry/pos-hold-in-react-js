@@ -1,19 +1,15 @@
 import React from 'react';
-import { CartProvider } from './CartContext'; // Import the CartProvider
-import { TableProvider } from './TableContext'; 
-import Product from './Product'; // Import the Product component
-import Cart from './Cart';
+
+import Foll from './Foll';
+import FollTable from './table/FollTable'
+
 
 function App() {
   return (
-    <CartProvider>
-      <TableProvider>
         <div className="App">
-          <Product />
+          <Foll />
+          <FollTable/>
         </div>
-        <Cart/>
-      </TableProvider>
-    </CartProvider>
   );
 }
 
